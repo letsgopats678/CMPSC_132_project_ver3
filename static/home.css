@@ -1,0 +1,47 @@
+
+
+body {
+ background-image: url(https://content.usaa.com/mcontent/static_assets/Media/real-estate-rern-vid-teaser.gif?cacheid=3092709742_p);
+ background-blend-mode: lighten;
+
+}
+input[type=text], select {
+  width: 20%;
+  padding: 6px 8px;
+  margin: 5px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+label {
+  font-size: 16px
+}
+.b {
+  text-align: center;
+}
+.form {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 15px;
+  width: 45%;
+  opacity: .8;
+}
+
+.form1 {
+  background-color: #f2f2f2;
+  opacity: .9;
+  width: 45%;
+  float: left;
+  border-radius: 5px;
+  padding: 15px;
+}
+.statOutput{
+  margin-left: 50%;
+  background-color: #f2f2f2;
+  opacity: .9;
+  border-radius: 5px;
+  padding: 15px;
+  height: 360px;
+
+}

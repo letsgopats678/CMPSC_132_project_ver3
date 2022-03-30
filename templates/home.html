@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<script> src="ExpenseCalc.js" </script>
+<html lang="en">
+<h1 class = "b">Cost of Living Calculater</h1>
+<h2 class= "b"> By Takiur Rahman, Joseph Olanya, and Eric Phillips</h2>
+<body>
+
+  <div style="width: 100%;">
+
+    <div class= "form1">
+  <h2 class= "b"> Information </h2>
+          <form>
+  <label for="income">What is your monthly income?</label><br>
+  <input type="text" id="income" name="income"><br>
+
+
+  <label for="yes_mealp">Are you taking the Commuter Meal plan?</label><br>
+  <input type="radio" id="yes_mealp" name="meal_plan" value="Yes">
+  <label for="yes_mealp">Yes</label><br>
+  <input type="radio" id="no_mealp" name="meal_plan" value="No">
+  <label for="no_mealp">No</label><br>
+
+  <label for="tran_type">Will you use public transportation or private transportation?</label><br>
+  <input type="checkbox" id="public" name="tran_type" value="Public"  >
+  <label for="tran_type">Public</label>
+  <input type="checkbox" id="private" name="tran_type" value="Private" onclick="privateCheck()">
+  <label for="tran_type">Private</label><br>
+  <div id="ifPrivate" style="visibility:hidden">
+  <label  for="tran_cost">What is your monthly estimated private transportation expense?</label><br>
+  <input type = "text" id = "tran_cost" name = "tran_cost" value = 0>
+    </div>
+
+<label for="Household_size">How many people will live in your household?</label><br>
+<input type="text" id="Household_size" name="Household_size"><br>
+
+<input type="reset">
+
+<input type="button" onclick="calculate()" value="Calculate">
+
+  </form>
+        </div>
+
+
+<div class= "statOutput">
+            <h2 class= "b"> Results </h2>
+  <p id="rent"> </p>
+  <p id="transportation"> </p>
+  <p id="meal"> </p>
+  <p id="utilities"> </p>
+  <p id="misnsavings"> </p>
+  <p id="household"> </p>
+        </div>
+    </div>
+
+</body>
+</html>
