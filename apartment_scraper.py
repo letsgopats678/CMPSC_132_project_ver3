@@ -1,11 +1,15 @@
 from bs4 import BeautifulSoup
 import requests
+import json
 
 html_info = requests.get("https://pennstate.craigslist.org/search/apa")
 
 soup = BeautifulSoup(html_info.text, 'lxml')
 
 listings = soup.find_all('li', class_="result-row")
+
+json_file_full_rent = []
+json_file_rent = []
 
 input_choice = input('Do you want to live with roommates?: ')
 if input_choice in ['yes', 'Yes', 'y', 'YES', 'Y']:
@@ -46,13 +50,20 @@ if input_choice in ['yes', 'Yes', 'y', 'YES', 'Y']:
             else:
                 return num_prices/num_rooms
 
+        json_listing = {
+            "listings": {
+            "Posting Date": day_posted.text,
+            "Post Name": post_of_flat.text,
+            "Number of Bedrooms": bedroom_num,
+            "Price Per Month": listing_price.text,
+            "Price Per Student": cost_per_person(bedroom_num, price_of_apartment),
+            "Link to Main Post": main_website
+            }
+        }
 
-        print(f"\nDate Posted: {day_posted.text}"
-              f"\nPosting:{post_of_flat.text}"
-              f"Number of bedrooms: {bedroom_num}"
-              f"\nPrice per month: {listing_price.text}"
-              f"\nPrice per student: ${cost_per_person(bedroom_num, price_of_apartment)}"
-              f"\nLink to main website: {main_website}")
+
+        json_file_full_rent.append(json_listing)
+
 
 else:
     for listing in listings:
@@ -89,10 +100,29 @@ else:
             else:
                 return num_prices / num_rooms
 
+        json_listing2 = {
+            "listings": {
+                "Posting Date": day_posted.text,
+                "Post Name": post_of_flat.text,
+                "Number of Bedrooms": bedroom_num,
+                "Price Per Month": listing_price.text,
+                "Link to Main Post": main_website
+            }
+        }
+        json_file_rent.append(json_listing2)
+
+# Serializing json
+json_object = json.dumps(json_file_full_rent, indent=4)
+json_object2 = json.dumps(json_file_rent, indent=3)
+
+with open("listings_roommates.json", "w+") as outfile:
+    outfile.write(json_object)
+    outfile.close()
+
+with open("listings.json", 'w+') as outfile2:
+    outfile2.write(json_object2)
+    outfile2.close()
 
 
-        print(f"\nDate Posted: {day_posted.text}"
-              f"\nPosting:{post_of_flat.text}"
-              f"Number of bedrooms: {bedroom_num}"
-              f"\nPrice per month: {listing_price.text}"
-              f"\nLink to main website: {main_website}")
+
+
