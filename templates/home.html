@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<script> src="ExpenseCalc.js" </script>
 <html lang="en">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='home.css') }}">
 <h1 class = "b">Cost of Living Calculater</h1>
 <h2 class= "b"> By Takiur Rahman, Joseph Olanya, and Eric Phillips</h2>
 <body>
@@ -9,21 +9,21 @@
 
     <div class= "form1">
   <h2 class= "b"> Information </h2>
-          <form>
+        <form action="/" method="POST">
   <label for="income">What is your monthly income?</label><br>
-  <input type="text" id="income" name="income"><br>
+  <input type="text" name="income" ><br>
 
 
   <label for="yes_mealp">Are you taking the Commuter Meal plan?</label><br>
-  <input type="radio" id="yes_mealp" name="meal_plan" value="Yes">
+  <input type="radio"  name="yes_mealp" value="Yes">
   <label for="yes_mealp">Yes</label><br>
-  <input type="radio" id="no_mealp" name="meal_plan" value="No">
+  <input type="radio" id="no_mealp" name="no_mealp" value="No">
   <label for="no_mealp">No</label><br>
 
-  <label for="tran_type">Will you use public transportation or private transportation?</label><br>
-  <input type="checkbox" id="public" name="tran_type" value="Public"  >
-  <label for="tran_type">Public</label>
-  <input type="checkbox" id="private" name="tran_type" value="Private" onclick="privateCheck()">
+  <label for="public">Will you use public transportation or private transportation?</label><br>
+  <input type="checkbox" id="public" name="public" value="Public"  >
+  <label for="private">Public</label>
+  <input type="checkbox" id="private" name="private" value="Private" onclick="privateCheck()">
   <label for="tran_type">Private</label><br>
   <div id="ifPrivate" style="visibility:hidden">
   <label  for="tran_cost">What is your monthly estimated private transportation expense?</label><br>
@@ -34,8 +34,7 @@
 <input type="text" id="Household_size" name="Household_size"><br>
 
 <input type="reset">
-
-<input type="button" onclick="calculate()" value="Calculate">
+            <button type="submit" value="submit">Calculate</button>
 
   </form>
         </div>
@@ -43,14 +42,25 @@
 
 <div class= "statOutput">
             <h2 class= "b"> Results </h2>
-  <p id="rent"> </p>
-  <p id="transportation"> </p>
-  <p id="meal"> </p>
-  <p id="utilities"> </p>
-  <p id="misnsavings"> </p>
-  <p id="household"> </p>
+    {%if rent %}
+    <p id="rent">Rent: {{rent}} </p>
+  <p id="transportation">Transportation: {{ transportation }} </p>
+  <p id="meal">Meal: {{ meal }} </p>
+  <p id="utilities"> Utilities: {{ utilities }} </p>
+  <p id="misnsavings">Miscellanious and Savings: {{ misnsavings }} </p>
+  <p id="household"> Household Size: {{ household_size }}</p>
+    {% endif %}
         </div>
     </div>
 
 </body>
+
+<script>function privateCheck() {
+
+    if (document.getElementById('private').checked) {
+        document.getElementById('ifPrivate').style.visibility = 'visible';
+    }
+    else {document.getElementById('ifPrivate').style.visibility = 'hidden';
+         }
+}</script>
 </html>

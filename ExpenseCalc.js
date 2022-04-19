@@ -1,4 +1,5 @@
 
+
 function privateCheck() {
 
     if (document.getElementById('private').checked) {
@@ -44,5 +45,18 @@ document.getElementById("meal").innerHTML = "Meal: "+ meal;
 document.getElementById("utilities").innerHTML = "Utilities: " + utilities;
 document.getElementById("misnsavings").innerHTML = "Miscellenious and Savings: " + misnsavings;
 document.getElementById("household").innerHTML = "Household Size: " + household_size;
+
+const client = {
+ "Rent": rent
+}
+const data = JSON.stringify(client)
+
+fileSystem.writeFile("rent.json", data, err=>{
+ if(err){
+   console.log("Error writing file" ,err)
+ } else {
+   console.log('JSON data is written to the file successfully')
+ }
+})
 
 }
