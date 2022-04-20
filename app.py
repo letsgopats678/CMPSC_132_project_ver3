@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import json
 
 app = Flask(__name__)
 
@@ -36,6 +37,25 @@ def calculate():
         #miscellenious and savings
         misnsavings = income * 0.15
         rent =(income - transportation - meal - utilities - misnsavings)
+
+
+        with open('listings.json') as apartments:
+            apartments_at_psu = json.load(apartments)
+
+        max_budget2 = float(input('Enter your maximum budget: '))
+
+        def in_budget_apartment(max_price):
+            for i in apartments_at_psu:
+                price_of_listings = float(i['listings']['Price Per Month'])
+                postings = i['listings']['Posting Date']
+                name_of_post = i['listings']['Post Name']
+                number_of_bedrooms = i['listings']['Number of Bedrooms']
+                main_url = i['listings']['Link to Main Post']
+
+                if price_of_listings < max_budget2 and (household_size / number_of_bedrooms) < 2:
+                    print(price_of_listings, postings, name_of_post, number_of_bedrooms, main_url)
+                else:
+                    print('')
     return render_template('Home.html', rent=rent, transportation=transportation, meal=meal, utilities=utilities, misnsavings=misnsavings, household_size=household_size)
 
 
