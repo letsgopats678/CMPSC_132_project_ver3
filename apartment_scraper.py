@@ -11,105 +11,107 @@ listings = soup.find_all('li', class_="result-row")
 json_file_full_rent = []
 json_file_rent = []
 
-input_choice = input('Do you want to live with roommates?: ')
-if input_choice in ['yes', 'Yes', 'y', 'YES', 'Y']:
-    for listing in listings:
-        links = []
 
-        day_posted = listing.find('time', class_='result-date')
-        listing_price = listing.find('span', class_= 'result-price')
-        post_of_flat = listing.find('h3', class_='result-heading')
-        main_website = listing.a['href']
-        num_bedrooms = listing.find('span', class_= 'shared-line-bubble')
+for listing in listings:
+    links = []
 
-
-        links.append(main_website)
-        for link in links:
-            html_in = requests.get(link)
-            soup = BeautifulSoup(html_in.text, 'lxml')
-
-            linkers= soup.find('p', class_="attrgroup")
-            rooms = linkers.find('span', class_='shared-line-bubble')
-
-            bedrooms = rooms.text
-            bedroom_num = float(bedrooms[0:1])
+    day_posted = listing.find('time', class_='result-date')
+    listing_price = listing.find('span', class_= 'result-price')
+    post_of_flat = listing.find('h3', class_='result-heading')
+    main_website = listing.a['href']
+    num_bedrooms = listing.find('span', class_= 'shared-line-bubble')
 
 
+    links.append(main_website)
+    for link in links:
+        html_in = requests.get(link)
+        soup = BeautifulSoup(html_in.text, 'lxml')
 
-        house_price = listing_price.text
-        if ',' in house_price:
-            price_of_apartment = float(house_price[1:].replace(',', ''))
+        linkers= soup.find('p', class_="attrgroup")
+        rooms = linkers.find('span', class_='shared-line-bubble')
+
+        bedrooms = rooms.text
+        bedroom_num = float(bedrooms[0:1])
+
+
+
+    house_price = listing_price.text
+    if ',' in house_price:
+        price_of_apartment = float(house_price[1:].replace(',', ''))
+    else:
+        price_of_apartment = float(house_price[1:])
+
+
+    def cost_per_person(num_rooms, num_prices):
+
+        if num_rooms == 1 or num_rooms == 0:
+            return str(num_prices)
         else:
-            price_of_apartment = float(house_price[1:])
+            return num_prices/num_rooms
+
+    json_listing = {
+        "listings": {
+        "Posting Date": day_posted.text,
+        "Post Name": post_of_flat.text,
+        "Number of Bedrooms": bedroom_num,
+        "Price Per Month": listing_price.text,
+        "Price Per Student": cost_per_person(bedroom_num, price_of_apartment),
+        "Link to Main Post": main_website
+        }
+    }
 
 
-        def cost_per_person(num_rooms, num_prices):
+    json_file_full_rent.append(json_listing)
 
-            if num_rooms == 1 or num_rooms == 0:
-                return str(num_prices)
-            else:
-                return num_prices/num_rooms
 
-        json_listing = {
-            "listings": {
-            "Posting Date": day_posted.text,
-            "Post Name": post_of_flat.text,
-            "Number of Bedrooms": bedroom_num,
-            "Price Per Month": listing_price.text,
-            "Price Per Student": cost_per_person(bedroom_num, price_of_apartment),
-            "Link to Main Post": main_website
+
+
+
+
+for listing in listings:
+    links = []
+
+    day_posted = listing.find('time', class_='result-date')
+    listing_price = listing.find('span', class_='result-price')
+    post_of_flat = listing.find('h3', class_='result-heading')
+    main_website = listing.a['href']
+    num_bedrooms = listing.find('span', class_='shared-line-bubble')
+
+    links.append(main_website)
+    for link in links:
+        html_in = requests.get(link)
+        soup = BeautifulSoup(html_in.text, 'lxml')
+
+        linkers = soup.find('p', class_="attrgroup")
+        rooms = linkers.find('span', class_='shared-line-bubble')
+
+        bedrooms = rooms.text
+        bedroom_num = float(bedrooms[0:1])
+
+    house_price = listing_price.text
+    if ',' in house_price:
+        price_of_apartment = float(house_price[1:].replace(',', ''))
+    else:
+        price_of_apartment = float(house_price[1:])
+
+
+    def cost_per_person(num_rooms, num_prices):
+
+        if num_rooms == 1 or num_rooms == 0:
+            return str(num_prices)
+        else:
+            return num_prices / num_rooms
+
+    json_listing2 = {
+        "listings": {
+        "Posting Date": day_posted.text,
+        "Post Name": post_of_flat.text,
+        "Number of Bedrooms": bedroom_num,
+        "Price Per Month": price_of_apartment,
+        "Link to Main Post": main_website
             }
         }
-
-
-        json_file_full_rent.append(json_listing)
-
-
-else:
-    for listing in listings:
-        links = []
-
-        day_posted = listing.find('time', class_='result-date')
-        listing_price = listing.find('span', class_='result-price')
-        post_of_flat = listing.find('h3', class_='result-heading')
-        main_website = listing.a['href']
-        num_bedrooms = listing.find('span', class_='shared-line-bubble')
-
-        links.append(main_website)
-        for link in links:
-            html_in = requests.get(link)
-            soup = BeautifulSoup(html_in.text, 'lxml')
-
-            linkers = soup.find('p', class_="attrgroup")
-            rooms = linkers.find('span', class_='shared-line-bubble')
-
-            bedrooms = rooms.text
-            bedroom_num = float(bedrooms[0:1])
-
-        house_price = listing_price.text
-        if ',' in house_price:
-            price_of_apartment = float(house_price[1:].replace(',', ''))
-        else:
-            price_of_apartment = float(house_price[1:])
-
-
-        def cost_per_person(num_rooms, num_prices):
-
-            if num_rooms == 1 or num_rooms == 0:
-                return str(num_prices)
-            else:
-                return num_prices / num_rooms
-
-        json_listing2 = {
-            "listings": {
-                "Posting Date": day_posted.text,
-                "Post Name": post_of_flat.text,
-                "Number of Bedrooms": bedroom_num,
-                "Price Per Month": listing_price.text,
-                "Link to Main Post": main_website
-            }
-        }
-        json_file_rent.append(json_listing2)
+    json_file_rent.append(json_listing2)
 
 # Serializing json
 json_object = json.dumps(json_file_full_rent, indent=4)
@@ -122,7 +124,5 @@ with open("listings_roommates.json", "w+") as outfile:
 with open("listings.json", 'w+') as outfile2:
     outfile2.write(json_object2)
     outfile2.close()
-
-
 
 
