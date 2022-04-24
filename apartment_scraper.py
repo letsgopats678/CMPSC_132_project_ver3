@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import json
-
+import datetime
 html_info = requests.get("https://pennstate.craigslist.org/search/apa")
 
 soup = BeautifulSoup(html_info.text, 'lxml')
@@ -56,7 +56,9 @@ for listing in listings:
         "Number of Bedrooms": bedroom_num,
         "Price Per Month": listing_price.text,
         "Price Per Student": cost_per_person(bedroom_num, price_of_apartment),
-        "Link to Main Post": main_website
+        "Link to Main Post": main_website,
+        "Timestamp Added": datetime.date.today().day,
+        "Test": "success"
         }
     }
 
@@ -88,19 +90,10 @@ for listing in listings:
         bedrooms = rooms.text
         bedroom_num = float(bedrooms[0:1])
 
-    house_price = listing_price.text
-    if ',' in house_price:
-        price_of_apartment = float(house_price[1:].replace(',', ''))
-    else:
-        price_of_apartment = float(house_price[1:])
 
 
-    def cost_per_person(num_rooms, num_prices):
 
-        if num_rooms == 1 or num_rooms == 0:
-            return str(num_prices)
-        else:
-            return num_prices / num_rooms
+
 
     json_listing2 = {
         "listings": {
@@ -108,7 +101,8 @@ for listing in listings:
         "Post Name": post_of_flat.text,
         "Number of Bedrooms": bedroom_num,
         "Price Per Month": price_of_apartment,
-        "Link to Main Post": main_website
+        "Link to Main Post": main_website,
+        "Time Added": datetime.date.today().day
             }
         }
     json_file_rent.append(json_listing2)
@@ -117,12 +111,36 @@ for listing in listings:
 json_object = json.dumps(json_file_full_rent, indent=4)
 json_object2 = json.dumps(json_file_rent, indent=3)
 
-with open("listings_roommates.json", "w+") as outfile:
-    outfile.write(json_object)
-    outfile.close()
+with open("listings_roommates.json", "r") as readfile:
+    raw_data = readfile.read()
+    parsed_obj = json.loads(raw_data)
+    date = parsed_obj[0]['listings']['Timestamp Added']
+    if date != datetime.date.today().day:
+        readfile.close()
+        with open("listings_roommates.json", "w+") as outfile:
+            outfile.write(json_object)
+            outfile.close()
+    else:
+        print("listings_roomates.json up-to-date.")
 
-with open("listings.json", 'w+') as outfile2:
-    outfile2.write(json_object2)
-    outfile2.close()
+
+with open("listings.json", "r") as readfile2:
+    raw_data = readfile2.read()
+    parsed_obj = json.loads(raw_data)
+    date = parsed_obj[0]['listings']['Time Added']
+    if date != datetime.date.today().day:
+        readfile2.close()
+        with open("listings.json", "w+") as outfile2:
+            outfile2.write(json_object2)
+            outfile2.close()
+    else:
+        print("listings.json up-to-date.")
+
+
+
+
+
+
+
 
 
