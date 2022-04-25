@@ -45,3 +45,24 @@ label {
   height: 360px;
 
 }
+.listings {
+
+  width: 1500px;
+  margin: auto;
+  margin-top: 20px;
+  background-color: #f2f2f2;
+  opacity: .9;
+  border-radius: 10px;
+  height: 200px;
+  padding: 15px;
+}
+.bb{
+  text-align: center;
+  width: 1500px;
+  margin: auto;
+  margin-top: 10px;
+  background-color: #f2f2f2;
+  opacity: .9;
+  border-radius: 10px;
+  height: 45px;
+}
