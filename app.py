@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 
+from apartment_scraper import get_listings
 app = Flask(__name__)
 
 
