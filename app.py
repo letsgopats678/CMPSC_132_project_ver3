@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request
-
+from bs4 import BeautifulSoup
+import requests
+import json
+import datetime
 from apartment_scraper import get_listings
 app = Flask(__name__)
 

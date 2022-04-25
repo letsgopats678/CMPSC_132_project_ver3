@@ -67,6 +67,7 @@ def get_listings(rent, mates, list):
         json_file_full_rent.append(json_listing)
 
 
+
     # Serializing json
     json_object = json.dumps(json_file_full_rent, indent=4)
 
@@ -88,6 +89,7 @@ def get_listings(rent, mates, list):
         for i in parsed_obj2:
             if (float(i['Number of Bedrooms']) == 0) and (float(i['Price Per Student']) * 2) <= rent:
                 list.append(i)
-            elif (float(i['Number of Bedrooms']) != 0) and (float(i['Price Per Student']) <= rent) and (mates / float(i['Number of Bedrooms'])) <= 2:
+            elif (float(i['Price Per Student']) <= rent) and (mates / float(i['Number of Bedrooms'])) <= 2:
                 list.append(i)
         readfile.close()
+
