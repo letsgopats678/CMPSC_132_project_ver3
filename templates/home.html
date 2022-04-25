@@ -53,6 +53,19 @@
         </div>
     </div>
 
+<h2 class= "bb">Listings</h2>
+  {%if rent %}
+{%for i in range(0, len)%}
+  <div class= "listings">
+  <p>  Listing Name: {{parsed_list[i]["Post Name"]}}</p>
+  <p>  Bedrooms: {{parsed_list[i]["Number of Bedrooms"]}}</p>
+  <p>  Rent: {{parsed_list[i]["Price Per Month"]}}</p>
+  <p>  Rent Per Person: {{parsed_list[i]["Price Per Student"]}}</p>
+  <p>  Link: {{parsed_list[i]["Link"]}}</p>
+  <p>  Date Posted: {{parsed_list[i]["Posting Date"]}}</p>
+  </div>
+{% endfor %}
+{% endif %}
 </body>
 
 <script>function privateCheck() {
