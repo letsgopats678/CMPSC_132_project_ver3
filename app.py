@@ -50,7 +50,7 @@ def calculate():
         total_rent = household_size * rent
     get_listings(rent, household_size, parsed_list)
 
-    return render_template('Home.html', rent=rent, transportation=transportation, meal=meal, utilities=utilities, misnsavings=misnsavings, household_size=household_size, parsed_list=parsed_list, len=len(parsed_list))
+    return render_template('home.html', rent=rent, transportation=transportation, meal=meal, utilities=utilities, misnsavings=misnsavings, household_size=household_size, parsed_list=parsed_list, len=len(parsed_list))
 
 
 if __name__ == '__main__':
