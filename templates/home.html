@@ -61,11 +61,14 @@
   <p>  Bedrooms: {{parsed_list[i]["Number of Bedrooms"]}}</p>
   <p>  Rent: {{parsed_list[i]["Price Per Month"]}}</p>
   <p>  Rent Per Person: {{parsed_list[i]["Price Per Student"]}}</p>
-  <p>  Link: {{parsed_list[i]["Link"]}}</p>
+  <p>
+<a href="{{parsed_list[i]["Link"]}}">Listing link</a> </p>
   <p>  Date Posted: {{parsed_list[i]["Posting Date"]}}</p>
   </div>
 {% endfor %}
 {% endif %}
+<h2 class= "bb">Listings Were Sourced From Craigslist</h2>
+
 </body>
 
 <script>function privateCheck() {
